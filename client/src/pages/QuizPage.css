@@ -1,0 +1,236 @@
+.quiz-page {
+  padding: 40px 0;
+  min-height: 70vh;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 32px;
+  opacity: 0;
+}
+
+.quiz-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.quiz-header p {
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/*Quiz card*/
+.quiz-card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  max-width: 680px;
+  margin: 0 auto;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.quiz-question-area {
+  background: var(--color-gentle);
+  padding: 28px 32px;
+}
+
+.question-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-light);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.question-text {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.quiz-options {
+  padding: 24px 32px;
+}
+
+.quiz-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  text-align: left;
+  background: var(--color-sky);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--color-ocean);
+  background: #ddeef9;
+}
+
+.quiz-option.selected {
+  border-color: var(--color-ocean);
+  background: #d0e6f5;
+}
+
+.quiz-option.correct {
+  background: var(--color-calm);
+  border-color: var(--color-success);
+}
+
+.quiz-option.incorrect {
+  background: #fdecea;
+  border-color: var(--color-error);
+}
+
+.quiz-option.faded {
+  opacity: 0.45;
+}
+
+.option-letter {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-ocean);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.quiz-option.selected .option-letter {
+  background: var(--color-ocean);
+}
+
+.quiz-option.correct .option-letter {
+  background: var(--color-success);
+}
+
+.quiz-option.incorrect .option-letter {
+  background: var(--color-error);
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-check {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/*Submit & skip*/
+.quiz-submit-area,
+.quiz-feedback-area {
+  padding: 20px 32px 32px;
+  text-align: center;
+}
+
+.quiz-submit-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.quiz-submit-area .btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-skip {
+  background: none;
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.btn-skip:hover {
+  color: var(--color-coral);
+}
+
+/*Complete screen */
+.quiz-complete {
+  text-align: center;
+  max-width: 540px;
+  margin: 40px auto;
+  padding: 48px 32px;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  opacity: 0;
+}
+
+.qc-emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.quiz-complete h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  color: var(--color-sun);
+}
+
+.qc-score {
+  font-size: 1.2rem;
+  color: var(--color-ocean);
+  margin-bottom: 8px;
+}
+
+.qc-message {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.qc-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-certificate {
+  padding: 14px 32px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--color-sun), var(--color-coral));
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: var(--font-display);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-certificate:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-medium);
+}
+
+@media (max-width: 768px) {
+  .quiz-question-area,
+  .quiz-options,
+  .quiz-submit-area,
+  .quiz-feedback-area {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

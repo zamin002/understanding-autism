@@ -1,0 +1,254 @@
+.story-page {
+  padding: 40px 0;
+  min-height: 70vh;
+}
+
+/*Story header*/
+.story-header {
+  text-align: center;
+  margin-bottom: 40px;
+  opacity: 0;
+}
+
+.story-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.story-header p {
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/*Story selection cards*/
+.story-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.story-select-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  border: 3px solid transparent;
+  transition: all 0.3s var(--transition-bounce);
+  opacity: 0;
+}
+
+.story-select-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-float);
+  border-color: var(--story-color);
+}
+
+.story-select-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.story-select-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.story-select-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.story-select-cta {
+  margin-top: 16px;
+  padding: 8px 20px;
+  background: var(--story-color, var(--color-ocean));
+  color: var(--color-text);
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Back button */
+.story-back-btn {
+  background: none;
+  color: var(--color-ocean);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.story-back-btn:hover {
+  color: var(--color-coral);
+}
+
+/*Scene card */
+.story-scene-card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0;
+}
+
+.scene-header {
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scene-emoji {
+  font-size: 2rem;
+}
+
+.scene-title {
+  font-size: 1.3rem;
+  color: var(--color-text);
+}
+
+.scene-body {
+  padding: 32px;
+}
+
+.scene-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: 24px;
+}
+
+/*Choices*/
+.choices-prompt {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-ocean);
+  margin-bottom: 12px;
+}
+
+.choice-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--color-sky);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  font-size: 1rem;
+  text-align: left;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.choice-btn:hover {
+  background: var(--color-ocean);
+  color: white;
+  transform: translateX(6px);
+}
+
+.choice-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-ocean);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.choice-btn:hover .choice-number {
+  background: white;
+  color: var(--color-ocean);
+}
+
+.choice-text {
+  flex: 1;
+}
+
+/*Ending screen*/
+.story-ending {
+  text-align: center;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 48px 32px;
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  opacity: 0;
+}
+
+.ending-emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.story-ending h2 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  color: var(--color-grass);
+}
+
+.ending-scene-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.ending-lesson {
+  padding: 16px 20px;
+  background: var(--color-calm);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.ending-score {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-ocean);
+  margin-bottom: 24px;
+}
+
+.ending-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .story-list {
+    grid-template-columns: 1fr;
+  }
+
+  .scene-body {
+    padding: 24px;
+  }
+}

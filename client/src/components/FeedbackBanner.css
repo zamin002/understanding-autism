@@ -1,0 +1,46 @@
+.feedback-banner {
+  padding: 20px 24px;
+  border-radius: var(--radius-md);
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.feedback-banner.positive {
+  background: var(--color-calm);
+  border: 2px solid var(--color-grass);
+}
+
+.feedback-banner.neutral {
+  background: var(--color-gentle);
+  border: 2px solid var(--color-sun);
+}
+
+.feedback-icon {
+  font-size: 2rem;
+}
+
+.feedback-message {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 500px;
+  color: var(--color-text);
+}
+
+.feedback-btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-xl);
+  background: var(--color-ocean);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.feedback-btn:hover {
+  background: #4A8AC4;
+  transform: scale(1.05);
+}

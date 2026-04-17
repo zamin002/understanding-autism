@@ -1,0 +1,46 @@
+.footer {
+  background: var(--color-cloud);
+  border-top: 2px solid var(--color-sky);
+  padding: 32px 0;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-ocean);
+}
+
+.footer-emoji {
+  font-size: 1.2rem;
+}
+
+.footer-sub {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+.footer-note {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin: 8px auto 0;
+  line-height: 1.5;
+}
+
+.footer-note a {
+  color: var(--color-ocean);
+  text-decoration: underline;
+}
+
+.footer-note a:hover {
+  color: var(--color-coral);
+}
