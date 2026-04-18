@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import "./ModuleCard.css";
 
 // card for each module on the homepage
-function ModuleCard({ title, description, emoji, color, link, delay }) {
+function ModuleCard({ title, description, emoji, color, textColor, link, delay }) {
   const animDelay = delay || 0;
 
   return (
     <Link
       to={link}
       className="module-card animate-fade-in"
-      style={{ "--card-accent": color, animationDelay: `${animDelay}ms` }}
+      style={{ "--card-accent": color, "--card-text": textColor, animationDelay: `${animDelay}ms` }}
     >
       <div className="module-card-icon" aria-hidden="true">
         {emoji}

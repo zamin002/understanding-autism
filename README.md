@@ -16,7 +16,7 @@ This is a web-based educational platform that teaches non-autistic children abou
 - **Printable Certificate** – Personalised "Autism Ally" certificate with the child's name and date
 - **Calm Mode** – Accessibility toggle that reduces animations and uses muted colours
 - **Responsive Design** – Works on desktop, tablet, and mobile
-- **Backend API** – RESTful Express server with MySQL for progress tracking and session management
+- **Backend API** – RESTful Express server with MySQL, prepared for session and progress tracking (not yet connected to the frontend — see Known Limitations)
 
 ## Tech Stack
 
@@ -26,7 +26,8 @@ This is a web-based educational platform that teaches non-autistic children abou
 | Styling | Custom CSS with CSS variables |
 | Backend | Node.js, Express |
 | Database | MySQL 8 |
-| Fonts | Fredoka (display), Nunito (body) via Google Fonts |
+| Security | express-rate-limit (100 req/15 min), CORS |
+| Fonts | Fredoka (display), Nunito (body) — self-hosted woff2 |
 
 ## Project Structure
 
@@ -118,7 +119,7 @@ cd server
 cp .env.example .env
 ```
 
-Edit `server/.env` with your MySQL credentials:
+The following environment variables are required in `server/.env`:
 
 ```
 PORT=5000
@@ -128,6 +129,14 @@ DB_PASSWORD=your_mysql_password
 DB_NAME=understanding_autism
 DB_PORT=3306
 CLIENT_URL=http://localhost:3000
+```
+
+> **Note:** `server/.env` contains sensitive credentials and should not be committed to version control. In a production deployment this file would be excluded via `.gitignore`.
+
+Also create `client/.env` for the frontend API URL:
+
+```
+REACT_APP_API_URL=http://localhost:5000
 ```
 
 ### Step 4: Install Dependencies
@@ -202,11 +211,11 @@ To test the quiz certificate: answer at least 5 out of 7 questions correctly (70
 ## Known Limitations / What Is Not Yet Implemented
 
 - **User sessions**: The session/progress API is built but not yet connected to the frontend (progress is currently tracked in component state only). This would be a future improvement.
-- **Database-driven content**: Educational content is currently served from static JS data files. The backend API and database are ready to serve this content once connected.
-- **Drag-and-drop**: The empathy game uses tap/click selection rather than HTML5 drag-and-drop due to better mobile accessibility.
+- **Database-driven content**: Educational content (stories, quiz questions, education pages, empathy scenarios) is currently served from static JS data files in `client/src/data/`. The backend API and database schema are ready to serve this content once connected.
+- **Empathy game interaction**: The empathy game uses click/tap selection, which was chosen for better mobile accessibility.
 - **Audio narration**: Planned but not yet implemented. Would use the Web Speech API.
 - **User testing with children**: Not conducted for ethical/safeguarding reasons at this stage.
-- **WCAG audit**: Basic accessibility features are implemented (keyboard navigation, ARIA labels, calm mode, alt text) but a full Lighthouse audit has not yet been run.
+- **WCAG audit**: Basic accessibility features are implemented (keyboard navigation, ARIA labels, calm mode, alt text). A Lighthouse audit has been run and colour contrast issues have been resolved, but a full manual accessibility audit has not yet been conducted.
 
 ## Accessibility Features
 

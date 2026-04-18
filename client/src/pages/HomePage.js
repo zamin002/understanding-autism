@@ -9,7 +9,7 @@ function HomePage() {
       title: "What is Autism?",
       description: "Learn the basics about autism in a friendly, simple way.",
       emoji: "📖",
-      color: "#5B9BD5",
+      color: "#1B6CB0",
       link: "/learn",
     },
     {
@@ -17,6 +17,7 @@ function HomePage() {
       description: "Interactive stories where your choices matter.",
       emoji: "📚",
       color: "#7EC8A0",
+      textColor: "#2D3436",
       link: "/story",
     },
     {
@@ -24,6 +25,7 @@ function HomePage() {
       description: "A game about picking kind and helpful responses.",
       emoji: "🤝",
       color: "#FF8C6B",
+      textColor: "#2D3436",
       link: "/empathy-game",
     },
     {
@@ -31,6 +33,7 @@ function HomePage() {
       description: "Experience what sensory overload can feel like.",
       emoji: "🌊",
       color: "#C5A3FF",
+      textColor: "#2D3436",
       link: "/sensory-sim",
     },
     {
@@ -38,6 +41,7 @@ function HomePage() {
       description: "Test what you have learned and earn your certificate!",
       emoji: "🏅",
       color: "#FFD93D",
+      textColor: "#2D3436",
       link: "/quiz",
     },
   ];

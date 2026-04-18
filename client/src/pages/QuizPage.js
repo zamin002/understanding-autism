@@ -69,7 +69,7 @@ function QuizPage() {
             </p>
             <div className="qc-actions">
               {passed && (
-                <Link to="/certificate" className="btn-certificate">
+                <Link to="/certificate" state={{ passed: true }} className="btn-certificate">
                   🏆 Get My Certificate
                 </Link>
               )}

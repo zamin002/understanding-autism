@@ -1,3 +1,20 @@
+/*Self hosting fonts instead of doing the extra DNS lookup to google font api - meaning better performance */
+@font-face {
+  font-family: 'Fredoka';
+  src: url('../fonts/fredoka.woff2') format('woff2');
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/nunito.woff2') format('woff2');
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* CSS Variables*/
 :root {
   --color-sky: #E8F4FD;
@@ -5,7 +22,7 @@
   --color-grass: #7EC8A0;
   --color-coral: #FF8C6B;
   --color-lavender: #C5A3FF;
-  --color-ocean: #5B9BD5;
+  --color-ocean: #1B6CB0;
   --color-cloud: #FFFFFF;
   --color-text: #2D3436;
   --color-text-light: #636E72;

@@ -51,7 +51,7 @@
   margin-top: 16px;
   padding: 8px 20px;
   background: var(--card-accent, var(--color-ocean));
-  color: white;
+  color: var(--card-text, white);
   border-radius: var(--radius-xl);
   font-size: 0.85rem;
   font-weight: 700;

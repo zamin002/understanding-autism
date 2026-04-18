@@ -1,11 +1,17 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
 import "./CertificatePage.css";
 
 function CertificatePage() {
+  const { state } = useLocation();
   const [name, setName] = useState("");
   const [showCertificate, setShowCertificate] = useState(false);
   const certRef = useRef(null);
+
+  // prevent user from just skipping to certificate without doing the quiz
+  if (!state?.passed) {
+    return <Navigate to="/quiz" replace />;
+  }
 
   // format the date nicely for the certificate
   const today = new Date().toLocaleDateString("en-GB", {
