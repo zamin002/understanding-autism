@@ -124,8 +124,8 @@ The following environment variables are required in `server/.env`:
 ```
 PORT=5000
 DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
+DB_USER=autism_app
+DB_PASSWORD=MMZeroDeparture
 DB_NAME=understanding_autism
 DB_PORT=3306
 CLIENT_URL=http://localhost:3000

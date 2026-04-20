@@ -87,6 +87,11 @@ CREATE TABLE scenario_attempts (
   FOREIGN KEY (choice_id)   REFERENCES scenario_choices(id)   ON DELETE SET NULL
 );
 
+-- APPLICATION USER (least-privilege — avoids running the app as root)
+CREATE USER IF NOT EXISTS 'autism_app'@'localhost' IDENTIFIED BY 'MMZeroDeparture';
+GRANT SELECT, INSERT, UPDATE ON understanding_autism.* TO 'autism_app'@'localhost';
+FLUSH PRIVILEGES;
+
 --SEED DATA
 
 INSERT INTO modules (title, slug, description, icon, sort_order) VALUES
