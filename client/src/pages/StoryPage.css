@@ -134,6 +134,20 @@
 }
 
 /*Choices*/
+.scene-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.scene-player-label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
 .choices-prompt {
   font-family: var(--font-display);
   font-size: 1rem;

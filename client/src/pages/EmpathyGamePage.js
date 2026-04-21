@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import empathyScenarios from "../data/empathyScenarios";
 import FeedbackBanner from "../components/FeedbackBanner";
 import ProgressBar from "../components/ProgressBar";
+import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import { Link } from "react-router-dom";
 import "./EmpathyGamePage.css";
 
-function EmpathyGamePage() {
+function EmpathyGamePage({ avatar }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedResponses, setSelectedResponses] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
+  const [lastCorrect, setLastCorrect] = useState(null);
 
   const scenario = empathyScenarios[currentIndex];
   const total = empathyScenarios.length;
@@ -39,6 +41,7 @@ function EmpathyGamePage() {
       setScore((prev) => prev + 1);
     }
 
+    setLastCorrect(allCorrect);
     setShowFeedback(true);
   };
 
@@ -48,10 +51,15 @@ function EmpathyGamePage() {
       setCurrentIndex(currentIndex + 1);
       setSelectedResponses([]);
       setShowFeedback(false);
+      setLastCorrect(null);
     } else {
       setGameComplete(true);
     }
   };
+
+  const reactionAvatar = avatar && showFeedback
+    ? { ...avatar, eye_style: lastCorrect ? "stars" : "sleepy", mouth: lastCorrect ? "grin" : "neutral" }
+    : avatar;
 
   // Restart game
   const handleRestart = () => {
@@ -106,6 +114,12 @@ function EmpathyGamePage() {
         <ProgressBar current={currentIndex + 1} total={total} label="Scenario" />
 
         <div className="empathy-card animate-fade-in" key={scenario.id}>
+          {reactionAvatar && (
+            <div className="empathy-avatar">
+              <AvatarDisplay selections={reactionAvatar} size={64} />
+              <span className="empathy-avatar-label">You</span>
+            </div>
+          )}
           <div className="empathy-situation">
             <span className="situation-label">The Situation:</span>
             <p className="situation-text">{scenario.situation}</p>

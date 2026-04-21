@@ -72,6 +72,20 @@
   opacity: 0;
 }
 
+.hero-avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-avatar-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-ocean);
+  text-align: center;
+}
+
 .hero-emoji-cluster {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

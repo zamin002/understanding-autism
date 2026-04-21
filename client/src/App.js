@@ -10,11 +10,14 @@ import EmpathyGamePage from "./pages/EmpathyGamePage";
 import SensorySim from "./pages/SensorySim";
 import QuizPage from "./pages/QuizPage";
 import CertificatePage from "./pages/CertificatePage";
+import AvatarOnboardingModal from "./components/avatar/AvatarOnboardingModal";
+import useAvatar from "./hooks/useAvatar";
 
 function App() {
   const [calmMode, setCalmMode] = useState(false);
+  const [editingAvatar, setEditingAvatar] = useState(false);
+  const { avatar, showOnboarding, saveAvatar, skipAvatar } = useAvatar();
 
-  // add/remove calm-mode class on body when toggle changes
   useEffect(() => {
     if (calmMode) {
       document.body.classList.add("calm-mode");
@@ -23,19 +26,45 @@ function App() {
     }
   }, [calmMode]);
 
+  function handleSave(selections) {
+    saveAvatar(selections);
+    setEditingAvatar(false);
+  }
+
+  function handleClose() {
+    if (editingAvatar && !showOnboarding) {
+      setEditingAvatar(false);
+    } else {
+      skipAvatar();
+    }
+  }
+
   return (
     <Router>
       <div className="app">
-        <Navbar calmMode={calmMode} setCalmMode={setCalmMode} />
+        {(showOnboarding || editingAvatar) && (
+          <AvatarOnboardingModal
+            onSave={handleSave}
+            onSkip={handleClose}
+            isEditing={editingAvatar && !showOnboarding}
+            currentAvatar={avatar}
+          />
+        )}
+        <Navbar
+          calmMode={calmMode}
+          setCalmMode={setCalmMode}
+          avatar={avatar}
+          onEditAvatar={() => setEditingAvatar(true)}
+        />
         <main>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage avatar={avatar} />} />
             <Route path="/learn" element={<LearnPage />} />
-            <Route path="/story" element={<StoryPage />} />
-            <Route path="/empathy-game" element={<EmpathyGamePage />} />
+            <Route path="/story" element={<StoryPage avatar={avatar} />} />
+            <Route path="/empathy-game" element={<EmpathyGamePage avatar={avatar} />} />
             <Route path="/sensory-sim" element={<SensorySim />} />
-            <Route path="/quiz" element={<QuizPage />} />
-            <Route path="/certificate" element={<CertificatePage />} />
+            <Route path="/quiz" element={<QuizPage avatar={avatar} />} />
+            <Route path="/certificate" element={<CertificatePage avatar={avatar} />} />
           </Routes>
         </main>
         <Footer />

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import quizQuestions from "../data/quizQuestions";
 import ProgressBar from "../components/ProgressBar";
 import FeedbackBanner from "../components/FeedbackBanner";
+import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import { Link, useNavigate } from "react-router-dom";
 import "./QuizPage.css";
 
-function QuizPage() {
+function QuizPage({ avatar }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -48,6 +49,11 @@ function QuizPage() {
 
   const passThreshold = Math.ceil(total * 0.7); // need 70% to pass
   const passed = score >= passThreshold;
+
+  const isCorrect = selectedOption == question?.correctIndex;
+  const reactionAvatar = avatar && showFeedback
+    ? { ...avatar, eye_style: isCorrect ? "stars" : "sleepy", mouth: isCorrect ? "grin" : "neutral" }
+    : avatar;
 
   // Quiz complete
   if (quizComplete) {
@@ -99,6 +105,11 @@ function QuizPage() {
         <ProgressBar current={currentIndex + 1} total={total} label="Question" />
 
         <div className="quiz-card animate-fade-in" key={question.id}>
+          {reactionAvatar && (
+            <div className="quiz-avatar">
+              <AvatarDisplay selections={reactionAvatar} size={64} />
+            </div>
+          )}
           <div className="quiz-question-area">
             <span className="question-number">Question {currentIndex + 1}</span>
             <h2 className="question-text">{question.question}</h2>

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import AvatarDisplay from "./avatar/AvatarDisplay";
 import "./Navbar.css";
 
-// navbar component - handles top nav + mobile menu + calm mode toggle
-function Navbar({ calmMode, setCalmMode }) {
+function Navbar({ calmMode, setCalmMode, avatar, onEditAvatar }) {
   const location = useLocation();
   const currentPath = location.pathname;
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // might refactor this into a separate file later if it gets bigger
   const navLinks = [
     { path: "/", label: "Home", emoji: "🏠" },
     { path: "/learn", label: "Learn", emoji: "📖" },
@@ -37,15 +36,37 @@ function Navbar({ calmMode, setCalmMode }) {
           <span className="navbar-logo-text">Understanding Autism</span>
         </Link>
 
-        {/* mobile hamburger */}
-        <button
-          className="navbar-toggle"
-          onClick={handleMenuToggle}
-          aria-expanded={menuOpen}
-          aria-label="Toggle navigation menu"
-        >
-          <span className={`hamburger ${menuOpen ? "open" : ""}`} />
-        </button>
+        <div className="navbar-right">
+          {avatar && (
+            <button
+              className="avatar-nav-btn"
+              onClick={onEditAvatar}
+              aria-label="Edit your avatar"
+              title="Edit avatar"
+            >
+              <AvatarDisplay selections={avatar} size={38} />
+            </button>
+          )}
+
+          <button
+            className={`calm-toggle ${calmMode ? "active" : ""}`}
+            onClick={() => setCalmMode(!calmMode)}
+            aria-label={calmLabel}
+            title="Calm mode reduces motion and uses softer colours"
+          >
+            {calmMode ? "🌙" : "☀️"} {calmMode ? "Calm On" : "Calm Off"}
+          </button>
+
+          {/* mobile hamburger */}
+          <button
+            className="navbar-toggle"
+            onClick={handleMenuToggle}
+            aria-expanded={menuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            <span className={`hamburger ${menuOpen ? "open" : ""}`} />
+          </button>
+        </div>
 
         <div className={`navbar-links ${menuOpen ? "open" : ""}`}>
           {navLinks.map((link) => {
@@ -62,16 +83,6 @@ function Navbar({ calmMode, setCalmMode }) {
               </Link>
             );
           })}
-
-          {/* calm mode - reduces motion and softens colours, keeping this for accessibility */}
-          <button
-            className={`calm-toggle ${calmMode ? "active" : ""}`}
-            onClick={() => setCalmMode(!calmMode)}
-            aria-label={calmLabel}
-            title="Calm mode reduces motion and uses softer colours"
-          >
-            {calmMode ? "🌙" : "☀️"} {calmMode ? "Calm On" : "Calm Off"}
-          </button>
         </div>
 
       </div>

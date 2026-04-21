@@ -87,6 +87,22 @@ CREATE TABLE scenario_attempts (
   FOREIGN KEY (choice_id)   REFERENCES scenario_choices(id)   ON DELETE SET NULL
 );
 
+CREATE TABLE avatars (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  session_id  VARCHAR(36)  NOT NULL UNIQUE,
+  skin_tone   VARCHAR(20)  NOT NULL DEFAULT 'medium',
+  hair_style  VARCHAR(20)  NOT NULL DEFAULT 'short',
+  hair_color  VARCHAR(20)  NOT NULL DEFAULT 'brown',
+  eye_style   VARCHAR(20)  NOT NULL DEFAULT 'happy',
+  mouth       VARCHAR(20)  NOT NULL DEFAULT 'smile',
+  outfit      VARCHAR(20)  NOT NULL DEFAULT 'casual',
+  accessory   VARCHAR(20)  NOT NULL DEFAULT 'none',
+  skipped     TINYINT(1)   NOT NULL DEFAULT 0,
+  created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (session_id) REFERENCES user_sessions(id) ON DELETE CASCADE
+);
+
 -- APPLICATION USER (least-privilege — avoids running the app as root)
 CREATE USER IF NOT EXISTS 'autism_app'@'localhost' IDENTIFIED BY 'MMZeroDeparture';
 GRANT SELECT, INSERT, UPDATE ON understanding_autism.* TO 'autism_app'@'localhost';

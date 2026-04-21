@@ -1,8 +1,9 @@
 import React from "react";
 import ModuleCard from "../components/ModuleCard";
+import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import "./HomePage.css";
 
-function HomePage() {
+function HomePage({ avatar }) {
   // might move this to a data file later if it grows
   const modules = [
     {
@@ -74,13 +75,20 @@ function HomePage() {
           </div>
 
           <div className="hero-visual animate-fade-in" style={{ animationDelay: "200ms" }}>
-            <div className="hero-emoji-cluster" aria-hidden="true">
-              {floatingEmojis.map((e, i) => (
-                <span key={i} className="hero-float" style={{ animationDelay: e.delay }}>
-                  {e.icon}
-                </span>
-              ))}
-            </div>
+            {avatar ? (
+              <div className="hero-avatar-wrap">
+                <AvatarDisplay selections={avatar} size={160} />
+                <p className="hero-avatar-label">Welcome back! 👋</p>
+              </div>
+            ) : (
+              <div className="hero-emoji-cluster" aria-hidden="true">
+                {floatingEmojis.map((e, i) => (
+                  <span key={i} className="hero-float" style={{ animationDelay: e.delay }}>
+                    {e.icon}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Link, useLocation, Navigate } from "react-router-dom";
+import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import "./CertificatePage.css";
 
-function CertificatePage() {
+function CertificatePage({ avatar }) {
   const { state } = useLocation();
   const [name, setName] = useState("");
   const [showCertificate, setShowCertificate] = useState(false);
@@ -83,6 +84,11 @@ function CertificatePage() {
           <div className="cert-border">
             <div className="cert-inner">
               <div className="cert-ribbon" aria-hidden="true">🏅</div>
+              {avatar && (
+                <div className="cert-avatar">
+                  <AvatarDisplay selections={avatar} size={90} />
+                </div>
+              )}
               <h2 className="cert-heading">Certificate of Achievement</h2>
               <p className="cert-subtitle">This certifies that</p>
               <h1 className="cert-name">{trimmedName}</h1>

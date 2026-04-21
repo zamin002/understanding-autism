@@ -4,13 +4,12 @@ import "./ModuleCard.css";
 
 // card for each module on the homepage
 function ModuleCard({ title, description, emoji, color, textColor, link, delay }) {
-  const animDelay = delay || 0;
-
+  // I removed animDelay since I never got around to adding the logic to doing calculations on delay inside component
   return (
     <Link
       to={link}
       className="module-card animate-fade-in"
-      style={{ "--card-accent": color, "--card-text": textColor, animationDelay: `${animDelay}ms` }}
+      style={{ "--card-accent": color, "--card-text": textColor, animationDelay: `${delay}ms` }}
     >
       <div className="module-card-icon" aria-hidden="true">
         {emoji}

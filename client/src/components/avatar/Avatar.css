@@ -1,0 +1,218 @@
+/* Modal */
+.avatar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.avatar-modal {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px 24px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-float);
+  animation: popIn 0.3s var(--transition-bounce) forwards;
+}
+
+.avatar-modal-prompt {
+  text-align: center;
+  max-width: 380px;
+}
+
+.avatar-modal-emoji {
+  font-size: 4rem;
+  margin-bottom: 12px;
+}
+
+.avatar-modal-title {
+  font-size: 1.6rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.avatar-modal-subtitle {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.avatar-prompt-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Builder */
+.avatar-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  background: var(--color-sky);
+  border-radius: var(--radius-md);
+}
+
+/* Categories */
+.avatar-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.avatar-category-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.avatar-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.avatar-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 58px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.avatar-option:hover {
+  background: var(--color-sky);
+  border-color: var(--color-ocean);
+}
+
+.avatar-option.selected {
+  background: var(--color-sky);
+  border-color: var(--color-ocean);
+  box-shadow: 0 0 0 2px rgba(27, 108, 176, 0.2);
+}
+
+.avatar-option-colour {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.avatar-option-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.avatar-option-text {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+/* Action buttons */
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-btn-save {
+  padding: 12px 32px;
+  width: 100%;
+  max-width: 280px;
+  border-radius: var(--radius-xl);
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  background: var(--color-ocean);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.avatar-btn-save:hover {
+  background: #155a96;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.avatar-btn-skip {
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.avatar-btn-skip:hover {
+  color: var(--color-text);
+}
+
+/* Navbar avatar button */
+.avatar-nav-btn {
+  background: var(--color-sky);
+  border: 2px solid var(--color-sky);
+  border-radius: 50%;
+  padding: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.avatar-nav-btn:hover {
+  border-color: var(--color-ocean);
+  transform: scale(1.05);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .avatar-modal {
+    padding: 20px 16px;
+  }
+
+  .avatar-option {
+    min-width: 50px;
+    padding: 6px 8px;
+  }
+
+  .avatar-option-colour {
+    width: 26px;
+    height: 26px;
+  }
+}

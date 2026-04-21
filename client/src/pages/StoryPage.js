@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import stories from "../data/stories";
 import FeedbackBanner from "../components/FeedbackBanner";
 import ProgressBar from "../components/ProgressBar";
+import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import { Link } from "react-router-dom";
 import "./StoryPage.css";
 
-function StoryPage() {
+function StoryPage({ avatar }) {
   const [selectedStory, setSelectedStory] = useState(null);
   const [currentSceneId, setCurrentSceneId] = useState(0);
   const [feedback, setFeedback] = useState(null);
@@ -180,7 +181,13 @@ function StoryPage() {
 
             {!feedback && scene.choices && (
               <div className="scene-choices">
-                <p className="choices-prompt">What do you do?</p>
+                {avatar && (
+                  <div className="scene-player">
+                    <AvatarDisplay selections={avatar} size={56} />
+                    <p className="scene-player-label">What do you do?</p>
+                  </div>
+                )}
+                {!avatar && <p className="choices-prompt">What do you do?</p>}
                 {scene.choices.map((choice, i) => (
                   <button
                     key={i}
