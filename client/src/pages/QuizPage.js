@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import quizQuestions from "../data/quizQuestions";
+import { MODULE_IDS } from "../data/moduleIds";
 import ProgressBar from "../components/ProgressBar";
 import FeedbackBanner from "../components/FeedbackBanner";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
+import { updateProgress } from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import "./QuizPage.css";
 
-function QuizPage({ avatar }) {
+function QuizPage({ avatar, sessionId }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -49,6 +51,12 @@ function QuizPage({ avatar }) {
 
   const passThreshold = Math.ceil(total * 0.7); // need 70% to pass
   const passed = score >= passThreshold;
+
+  useEffect(() => {
+    if (quizComplete && sessionId) {
+      updateProgress(sessionId, MODULE_IDS.quiz, "completed", score).catch(() => {});
+    }
+  }, [quizComplete]);
 
   const isCorrect = selectedOption == question?.correctIndex;
   const reactionAvatar = avatar && showFeedback

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import empathyScenarios from "../data/empathyScenarios";
+import { MODULE_IDS } from "../data/moduleIds";
 import FeedbackBanner from "../components/FeedbackBanner";
 import ProgressBar from "../components/ProgressBar";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
+import { updateProgress } from "../api";
 import { Link } from "react-router-dom";
 import "./EmpathyGamePage.css";
 
-function EmpathyGamePage({ avatar }) {
+function EmpathyGamePage({ avatar, sessionId }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedResponses, setSelectedResponses] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -56,6 +58,12 @@ function EmpathyGamePage({ avatar }) {
       setGameComplete(true);
     }
   };
+
+  useEffect(() => {
+    if (gameComplete && sessionId) {
+      updateProgress(sessionId, MODULE_IDS["empathy-game"], "completed", score).catch(() => {});
+    }
+  }, [gameComplete]);
 
   const reactionAvatar = avatar && showFeedback
     ? { ...avatar, eye_style: lastCorrect ? "stars" : "sleepy", mouth: lastCorrect ? "grin" : "neutral" }

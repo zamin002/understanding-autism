@@ -12,11 +12,13 @@ import QuizPage from "./pages/QuizPage";
 import CertificatePage from "./pages/CertificatePage";
 import AvatarOnboardingModal from "./components/avatar/AvatarOnboardingModal";
 import useAvatar from "./hooks/useAvatar";
+import useSession from "./hooks/useSession";
 
 function App() {
   const [calmMode, setCalmMode] = useState(false);
   const [editingAvatar, setEditingAvatar] = useState(false);
   const { avatar, showOnboarding, saveAvatar, skipAvatar } = useAvatar();
+  const { sessionId } = useSession();
 
   useEffect(() => {
     if (calmMode) {
@@ -58,12 +60,12 @@ function App() {
         />
         <main>
           <Routes>
-            <Route path="/" element={<HomePage avatar={avatar} />} />
+            <Route path="/" element={<HomePage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/learn" element={<LearnPage />} />
-            <Route path="/story" element={<StoryPage avatar={avatar} />} />
-            <Route path="/empathy-game" element={<EmpathyGamePage avatar={avatar} />} />
+            <Route path="/story" element={<StoryPage avatar={avatar} sessionId={sessionId} />} />
+            <Route path="/empathy-game" element={<EmpathyGamePage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/sensory-sim" element={<SensorySim />} />
-            <Route path="/quiz" element={<QuizPage avatar={avatar} />} />
+            <Route path="/quiz" element={<QuizPage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/certificate" element={<CertificatePage avatar={avatar} />} />
           </Routes>
         </main>

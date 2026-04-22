@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ModuleCard from "../components/ModuleCard";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
+import { fetchProgress } from "../api";
 import "./HomePage.css";
 
-function HomePage({ avatar }) {
+function HomePage({ avatar, sessionId }) {
+  const [completedModules, setCompletedModules] = useState(new Set());
+
+  useEffect(() => {
+    if (!sessionId) return;
+    fetchProgress(sessionId)
+      .then((res) => {
+        const done = new Set(
+          res.data
+            .filter((p) => p.status == "completed")
+            .map((p) => p.slug)
+        );
+        setCompletedModules(done);
+      })
+      .catch(() => {});
+  }, [sessionId]);
   // might move this to a data file later if it grows
   const modules = [
     {
@@ -12,6 +28,7 @@ function HomePage({ avatar }) {
       emoji: "📖",
       color: "#1B6CB0",
       link: "/learn",
+      slug: "what-is-autism",
     },
     {
       title: "Walk in My Shoes",
@@ -20,6 +37,7 @@ function HomePage({ avatar }) {
       color: "#7EC8A0",
       textColor: "#2D3436",
       link: "/story",
+      slug: "story",
     },
     {
       title: "Be a Good Friend",
@@ -28,6 +46,7 @@ function HomePage({ avatar }) {
       color: "#FF8C6B",
       textColor: "#2D3436",
       link: "/empathy-game",
+      slug: "empathy-game",
     },
     {
       title: "Sensory World",
@@ -36,6 +55,7 @@ function HomePage({ avatar }) {
       color: "#C5A3FF",
       textColor: "#2D3436",
       link: "/sensory-sim",
+      slug: "sensory-sim",
     },
     {
       title: "Autism Ally Quiz",
@@ -44,6 +64,7 @@ function HomePage({ avatar }) {
       color: "#FFD93D",
       textColor: "#2D3436",
       link: "/quiz",
+      slug: "quiz",
     },
   ];
 
@@ -102,7 +123,7 @@ function HomePage({ avatar }) {
           </p>
           <div className="modules-grid">
             {modules.map((mod, i) => (
-              <ModuleCard key={mod.link} {...mod} delay={i * 100} />
+              <ModuleCard key={mod.link} {...mod} delay={i * 100} completed={completedModules.has(mod.slug)} />
             ))}
           </div>
         </div>

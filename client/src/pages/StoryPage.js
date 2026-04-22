@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import stories from "../data/stories";
+import { MODULE_IDS } from "../data/moduleIds";
 import FeedbackBanner from "../components/FeedbackBanner";
 import ProgressBar from "../components/ProgressBar";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
+import { updateProgress } from "../api";
 import { Link } from "react-router-dom";
 import "./StoryPage.css";
 
-function StoryPage({ avatar }) {
+function StoryPage({ avatar, sessionId }) {
   const [selectedStory, setSelectedStory] = useState(null);
   const [currentSceneId, setCurrentSceneId] = useState(0);
   const [feedback, setFeedback] = useState(null);
@@ -55,6 +57,12 @@ function StoryPage({ avatar }) {
       }
     }
   };
+
+  useEffect(() => {
+    if (storyFinished && sessionId) {
+      updateProgress(sessionId, MODULE_IDS.story, "completed", totalPoints).catch(() => {});
+    }
+  }, [storyFinished]);
 
   const handleContinue = () => {
     setFeedback(null);

@@ -13,7 +13,8 @@ This is a web-based educational platform that teaches non-autistic children abou
 - **Educational Pages ("What is Autism?")** – Six illustrated step-by-step pages explaining autism in child-friendly language with fun facts
 - **Sensory Overload Simulator** – A slider-controlled visual experience demonstrating what sensory overload feels like, with a reflection screen
 - **Autism Ally Quiz** – Seven multiple-choice questions with immediate feedback; score ≥70% earns a printable certificate
-- **Printable Certificate** – Personalised "Autism Ally" certificate with the child's name and date
+- **Printable Certificate** – Personalised "Autism Ally" certificate with the child's name, date, and their avatar
+- **Avatar System** – SVG-based customisable avatar (skin tone, hair, eyes, outfit, accessories) created on first visit and persisted in localStorage; avatar appears on the home page, quiz, empathy game, stories, and certificate
 - **Calm Mode** – Accessibility toggle that reduces animations and uses muted colours
 - **Responsive Design** – Works on desktop, tablet, and mobile
 - **Backend API** – RESTful Express server with MySQL, prepared for session and progress tracking (not yet connected to the frontend — see Known Limitations)
@@ -42,7 +43,13 @@ understanding-autism/
 │       │   ├── Footer.js       # Site footer with resource links
 │       │   ├── ModuleCard.js   # Activity card for home page
 │       │   ├── FeedbackBanner.js  # Feedback after choices
-│       │   └── ProgressBar.js  # Visual progress indicator
+│       │   ├── ProgressBar.js  # Visual progress indicator
+│       │   └── avatar/         # Avatar system
+│       │       ├── AvatarDisplay.js       # SVG avatar renderer
+│       │       ├── AvatarBuilder.js       # Full customisation UI
+│       │       ├── AvatarCategory.js      # Single category row
+│       │       ├── AvatarOnboardingModal.js  # First-visit + edit modal
+│       │       └── Avatar.css             # Avatar component styles
 │       ├── pages/              # Route-level page components
 │       │   ├── HomePage.js     # Landing page with module grid
 │       │   ├── LearnPage.js    # Educational content pages
@@ -55,7 +62,10 @@ understanding-autism/
 │       │   ├── stories.js      # Branching story data
 │       │   ├── quizQuestions.js # Quiz questions and answers
 │       │   ├── empathyScenarios.js  # Empathy game scenarios
-│       │   └── educationPages.js    # Learning page content
+│       │   ├── educationPages.js    # Learning page content
+│       │   └── avatarAssets.js      # Avatar option definitions and defaults
+│       ├── hooks/
+│       │   └── useAvatar.js    # localStorage avatar persistence hook
 │       ├── styles/
 │       │   └── index.css       # Global styles and CSS variables
 │       ├── api.js              # Axios API helper
