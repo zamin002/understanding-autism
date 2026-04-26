@@ -4,20 +4,22 @@ An interactive educational website helping children aged 6–12 understand autis
 
 ## What this Software Does
 
-This is a web-based educational platform that teaches non-autistic children about autism in a positive manner. It uses interactive stories, empathy games, a sensory overload simulator, and a quiz with a printable certificate to promote understanding and inclusion.
+This is a web-based educational platform that teaches non-autistic children about autism in a positive manner. It uses interactive stories, empathy games, a platformer game, a sensory overload simulator, and a quiz with a printable certificate to promote understanding and inclusion.
 
 ## Core Features Implemented
 
 - **Interactive Stories ("Walk in My Shoes")** – Three branching narratives where the child's choices affect the outcome, teaching empathy through relatable school scenarios
-- **Empathy Game ("Be a Good Friend")** – Tap to select kind vs unkind responses to situations involving autistic classmates, with explanatory feedback
+- **Empathy Game ("Be a Good Friend")** – Four scenarios where the child selects kind vs unkind responses (multi-select then submit), with explanatory feedback after each scenario
 - **Educational Pages ("What is Autism?")** – Six illustrated step-by-step pages explaining autism in child-friendly language with fun facts
 - **Sensory Overload Simulator** – A slider-controlled visual experience demonstrating what sensory overload feels like, with a reflection screen
-- **Autism Ally Quiz** – Seven multiple-choice questions with immediate feedback; score ≥70% earns a printable certificate
+- **Platformer Game ("Help Sam's Journey")** – A three-level HTML5 Canvas platformer where the player navigates Sam through school environments (busy hallway, loud cafeteria, playground), collecting kindness hearts, avoiding overwhelm hazards, and unlocking an educational message between each level. Playable with keyboard arrow keys or on-screen touch controls
+- **Autism Ally Quiz** – Seven multiple-choice questions with immediate feedback; score ≥70% (5/7) earns a printable certificate
 - **Printable Certificate** – Personalised "Autism Ally" certificate with the child's name, date, and their avatar
 - **Avatar System** – SVG-based customisable avatar (skin tone, hair, eyes, outfit, accessories) created on first visit and persisted in localStorage; avatar appears on the home page, quiz, empathy game, stories, and certificate
+- **Audio Narration** – Optional text-to-speech narration (Web Speech API) that reads story scene text and quiz questions aloud; toggled via the 🔊/🔇 button in the navigation bar
 - **Calm Mode** – Accessibility toggle that reduces animations and uses muted colours
 - **Responsive Design** – Works on desktop, tablet, and mobile
-- **Backend API** – RESTful Express server with MySQL, prepared for session and progress tracking (not yet connected to the frontend — see Known Limitations)
+- **Backend API** – RESTful Express server with MySQL handling anonymous sessions and per-module progress tracking, fully connected to the frontend
 
 ## Tech Stack
 
@@ -27,7 +29,7 @@ This is a web-based educational platform that teaches non-autistic children abou
 | Styling | Custom CSS with CSS variables |
 | Backend | Node.js, Express |
 | Database | MySQL 8 |
-| Security | express-rate-limit (100 req/15 min), CORS |
+| Security | express-rate-limit (100 req/15 min general; 10 req/15 min session creation), CORS |
 | Fonts | Fredoka (display), Nunito (body) — self-hosted woff2 |
 
 ## Project Structure
@@ -39,11 +41,12 @@ understanding-autism/
 │   │   └── index.html
 │   └── src/
 │       ├── components/         # Reusable UI components
-│       │   ├── Navbar.js       # Navigation with calm mode toggle
+│       │   ├── Navbar.js       # Navigation with calm mode and narration toggles
 │       │   ├── Footer.js       # Site footer with resource links
 │       │   ├── ModuleCard.js   # Activity card for home page
 │       │   ├── FeedbackBanner.js  # Feedback after choices
 │       │   ├── ProgressBar.js  # Visual progress indicator
+│       │   ├── PlatformerGame.js  # HTML5 Canvas game engine (physics, draw loop)
 │       │   └── avatar/         # Avatar system
 │       │       ├── AvatarDisplay.js       # SVG avatar renderer
 │       │       ├── AvatarBuilder.js       # Full customisation UI
@@ -54,27 +57,33 @@ understanding-autism/
 │       │   ├── HomePage.js     # Landing page with module grid
 │       │   ├── LearnPage.js    # Educational content pages
 │       │   ├── StoryPage.js    # Interactive branching stories
-│       │   ├── EmpathyGamePage.js  # Kind response selection game
+│       │   ├── EmpathyGamePage.js  # Kind response multi-select game
 │       │   ├── SensorySim.js   # Sensory overload simulator
+│       │   ├── PlatformerPage.js   # Platformer state machine (select → play → complete)
 │       │   ├── QuizPage.js     # Multiple choice quiz
 │       │   └── CertificatePage.js  # Printable certificate
 │       ├── data/               # Static content data files
-│       │   ├── stories.js      # Branching story data
-│       │   ├── quizQuestions.js # Quiz questions and answers
+│       │   ├── stories.js           # Branching story data
+│       │   ├── quizQuestions.js     # Quiz questions and answers
 │       │   ├── empathyScenarios.js  # Empathy game scenarios
 │       │   ├── educationPages.js    # Learning page content
+│       │   ├── platformerLevels.js  # Platformer level definitions (platforms, hazards, collectibles)
+│       │   ├── moduleIds.js         # Maps module slugs to database IDs
 │       │   └── avatarAssets.js      # Avatar option definitions and defaults
 │       ├── hooks/
-│       │   └── useAvatar.js    # localStorage avatar persistence hook
+│       │   ├── useAvatar.js    # localStorage avatar persistence hook
+│       │   └── useSession.js   # Anonymous session creation and localStorage persistence hook
+│       ├── utils/
+│       │   └── narration.js    # Web Speech API speak/stop helpers
 │       ├── styles/
 │       │   └── index.css       # Global styles and CSS variables
-│       ├── api.js              # Axios API helper
+│       ├── api.js              # Axios API helper (modules, sessions, progress, scenarios)
 │       ├── App.js              # Root component with routing
 │       └── index.js            # React entry point
 ├── server/                     # Express backend
 │   ├── config/
 │   │   ├── db.js               # MySQL connection pool
-│   │   └── schema.sql          # Database schema + seed data
+│   │   └── schema.sql          # Database schema + seed data (all 6 modules)
 │   ├── models/                 # Database query functions
 │   │   ├── ModuleModel.js
 │   │   ├── SessionModel.js
@@ -93,7 +102,7 @@ understanding-autism/
 │   ├── .env.example            # Environment variable template
 │   ├── index.js                # Server entry point
 │   └── package.json
-├── package.json                # Root package.json
+├── package.json                # Root package.json (concurrently dev script)
 └── README.md
 ```
 
@@ -114,13 +123,13 @@ cd understanding-autism
 
 ### Step 2: Set Up the Database
 
-1. Open MySQL and create the database:
+Open MySQL and run the schema file:
 
 ```bash
 mysql -u root -p < server/config/schema.sql
 ```
 
-This creates the `understanding_autism` database with all tables and seed data.
+This creates the `understanding_autism` database (with `utf8mb4` charset for emoji support) with all tables and seeds all six modules.
 
 ### Step 3: Configure Environment Variables
 
@@ -214,22 +223,21 @@ The backend API runs on **http://localhost:5000**
 
 ## Test Credentials / Sample Inputs
 
-No login is required. The system uses anonymous sessions. Simply open the website and start exploring the activities.
+No login is required. The system uses anonymous sessions stored in localStorage. Simply open the website and start exploring the activities.
 
 To test the quiz certificate: answer at least 5 out of 7 questions correctly (70% threshold).
 
 ## Known Limitations / What Is Not Yet Implemented
 
-- **User sessions**: The session/progress API is built but not yet connected to the frontend (progress is currently tracked in component state only). This would be a future improvement.
-- **Database-driven content**: Educational content (stories, quiz questions, education pages, empathy scenarios) is currently served from static JS data files in `client/src/data/`. The backend API and database schema are ready to serve this content once connected.
-- **Empathy game interaction**: The empathy game uses click/tap selection, which was chosen for better mobile accessibility.
-- **Audio narration**: Planned but not yet implemented. Would use the Web Speech API.
+- **Database-driven content**: Educational content (stories, quiz questions, education pages, empathy scenarios, platformer levels) is currently served from static JS data files in `client/src/data/`. The backend API and database schema are ready to serve this content once connected.
+- **Audio narration browser support**: The Web Speech API is available in all modern browsers but voice quality and available voices vary by operating system. There is no fallback for browsers that do not support it.
 - **User testing with children**: Not conducted for ethical/safeguarding reasons at this stage.
 - **WCAG audit**: Basic accessibility features are implemented (keyboard navigation, ARIA labels, calm mode, alt text). A Lighthouse audit has been run and colour contrast issues have been resolved, but a full manual accessibility audit has not yet been conducted.
 
 ## Accessibility Features
 
 - Calm Mode toggle (reduces motion, softens colours)
+- Audio narration toggle (reads story scenes and quiz questions aloud via Web Speech API)
 - Keyboard-navigable throughout
 - ARIA labels on interactive elements
 - Semantic HTML structure

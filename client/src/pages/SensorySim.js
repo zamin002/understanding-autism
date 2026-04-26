@@ -25,7 +25,8 @@ function SensorySim() {
     transform: intensity > 60 ? `scale(${1 + intensity * 0.001})` : "none",
   };
 
-  // Shaking effect at high intensity
+  // shaking starts at intensity 50 and scales up to a max of 5px displacement
+  // the value is passed as a CSS custom property so the keyframe animation in CSS can read it
   const shakeClass = intensity > 50 ? "sim-shake" : "";
   const shakeIntensity = intensity > 50 ? Math.min((intensity - 50) * 0.1, 5) : 0;
 

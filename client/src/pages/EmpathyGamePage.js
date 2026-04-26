@@ -33,7 +33,8 @@ function EmpathyGamePage({ avatar, sessionId }) {
   const handleSubmit = () => {
     if (selectedResponses.length == 0) return;
 
-    // Check if all selected are kind and all kind ones are selected
+    // a point is only awarded if the player selected exactly the right set
+    // getting the count right but picking a wrong one, or missing a kind one, both count as incorrect
     const kindIds = scenario.responses.filter((r) => r.isKind).map((r) => r.id);
     const allCorrect =
       selectedResponses.length == kindIds.length &&

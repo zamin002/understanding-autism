@@ -6,9 +6,10 @@ import FeedbackBanner from "../components/FeedbackBanner";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import { updateProgress } from "../api";
 import { Link, useNavigate } from "react-router-dom";
+import { speak, stopSpeaking } from "../utils/narration";
 import "./QuizPage.css";
 
-function QuizPage({ avatar, sessionId }) {
+function QuizPage({ avatar, sessionId, narrationEnabled }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -49,7 +50,8 @@ function QuizPage({ avatar, sessionId }) {
     setQuizComplete(false);
   };
 
-  const passThreshold = Math.ceil(total * 0.7); // need 70% to pass
+  // Math.ceil so fractional thresholds always round up (e.g. 7 questions: ceil(4.9) = 5 required)
+  const passThreshold = Math.ceil(total * 0.7);
   const passed = score >= passThreshold;
 
   useEffect(() => {
@@ -58,7 +60,14 @@ function QuizPage({ avatar, sessionId }) {
     }
   }, [quizComplete]);
 
+  useEffect(() => {
+    if (!narrationEnabled || quizComplete) return;
+    speak(question.question);
+    return () => stopSpeaking();
+  }, [narrationEnabled, currentIndex, quizComplete]);
+
   const isCorrect = selectedOption == question?.correctIndex;
+  // temporarily override the avatar's expression to react to the answer without mutating the saved avatar
   const reactionAvatar = avatar && showFeedback
     ? { ...avatar, eye_style: isCorrect ? "stars" : "sleepy", mouth: isCorrect ? "grin" : "neutral" }
     : avatar;

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import AvatarDisplay from "./avatar/AvatarDisplay";
 import "./Navbar.css";
 
-function Navbar({ calmMode, setCalmMode, avatar, onEditAvatar }) {
+function Navbar({ calmMode, setCalmMode, narrationEnabled, setNarrationEnabled, avatar, onEditAvatar }) {
   const location = useLocation();
   const currentPath = location.pathname;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,6 +14,7 @@ function Navbar({ calmMode, setCalmMode, avatar, onEditAvatar }) {
     { path: "/story", label: "Stories", emoji: "📚" },
     { path: "/empathy-game", label: "Empathy Game", emoji: "🤝" },
     { path: "/sensory-sim", label: "Sensory World", emoji: "🌊" },
+    { path: "/platformer", label: "Platformer", emoji: "🎮"},
     { path: "/quiz", label: "Quiz", emoji: "🏅" },
   ];
 
@@ -47,6 +48,15 @@ function Navbar({ calmMode, setCalmMode, avatar, onEditAvatar }) {
               <AvatarDisplay selections={avatar} size={38} />
             </button>
           )}
+
+          <button
+            className={`calm-toggle ${narrationEnabled ? "active" : ""}`}
+            onClick={() => setNarrationEnabled(!narrationEnabled)}
+            aria-label={narrationEnabled ? "Turn off narration" : "Turn on narration"}
+            title="Narration reads story scenes and quiz questions aloud"
+          >
+            {narrationEnabled ? "🔊" : "🔇"} {narrationEnabled ? "Audio On" : "Audio Off"}
+          </button>
 
           <button
             className={`calm-toggle ${calmMode ? "active" : ""}`}

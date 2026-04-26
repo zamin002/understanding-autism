@@ -5,4 +5,5 @@ export const MODULE_IDS = {
   "empathy-game": 3,
   "sensory-sim":  4,
   quiz:           5,
+  platformer:     6,
 };

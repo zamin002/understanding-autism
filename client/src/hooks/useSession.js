@@ -15,6 +15,7 @@ function useSession() {
     // create a new anonymous session on first visit
     createSession()
       .then((res) => {
+        // handle both response shapes: {session: {id}} and {id} (defensive in case API shape changes)
         const id = res.data.session?.id || res.data.id;
         localStorage.setItem(SESSION_KEY, id);
         setSessionId(id);

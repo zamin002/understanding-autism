@@ -6,9 +6,10 @@ import ProgressBar from "../components/ProgressBar";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
 import { updateProgress } from "../api";
 import { Link } from "react-router-dom";
+import { speak, stopSpeaking } from "../utils/narration";
 import "./StoryPage.css";
 
-function StoryPage({ avatar, sessionId }) {
+function StoryPage({ avatar, sessionId, narrationEnabled }) {
   const [selectedStory, setSelectedStory] = useState(null);
   const [currentSceneId, setCurrentSceneId] = useState(0);
   const [feedback, setFeedback] = useState(null);
@@ -64,6 +65,13 @@ function StoryPage({ avatar, sessionId }) {
     }
   }, [storyFinished]);
 
+  useEffect(() => {
+    if (!narrationEnabled || !selectedStory) return;
+    const scene = selectedStory.scenes.find((s) => s.id == currentSceneId);
+    if (scene) speak(scene.text);
+    return () => stopSpeaking();
+  }, [narrationEnabled, selectedStory, currentSceneId]);
+
   const handleContinue = () => {
     setFeedback(null);
   };
@@ -109,10 +117,12 @@ function StoryPage({ avatar, sessionId }) {
 
   //Active story scene
   const scene = selectedStory.scenes.find((s) => s.id == currentSceneId);
+  // exclude ending scenes from the progress bar total so it never goes past 100%
   const totalScenes = selectedStory.scenes.filter((s) => !s.isEnding).length;
 
   // Story ending screen
   if (storyFinished && scene) {
+    // calculate the maximum possible score by taking the highest-point choice at each scene
     const maxPoints = selectedStory.scenes.reduce((sum, s) => {
       if (s.choices) {
         return sum + Math.max(...s.choices.map((c) => c.points || 0));

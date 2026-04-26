@@ -1,0 +1,335 @@
+.platformer-page {
+  padding: 40px 0 60px;
+  min-height: 70vh;
+}
+
+/*Header*/
+.platformer-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.platformer-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.platformer-header p {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 8px;
+  line-height: 1.6;
+}
+
+.platformer-controls-note {
+  font-size: 0.88rem !important;
+  background: var(--color-bg-alt, #f5f5f5);
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: var(--radius-xl);
+  margin-top: 4px !important;
+}
+
+.platformer-level-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.platformer-level-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+/*Level select grid*/
+.level-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.level-card {
+  background: var(--level-bg, var(--color-card));
+  border: 3px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.level-card:hover {
+  border-color: var(--color-ocean);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-float);
+}
+
+.level-card-emoji {
+  font-size: 2.8rem;
+}
+
+.level-card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.level-card-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  margin: 0;
+  color: var(--color-text);
+}
+
+.level-card-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.level-card-cta {
+  margin-top: 8px;
+  padding: 8px 20px;
+  background: var(--color-ocean);
+  color: white;
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/*Canvas game area*/
+.platformer-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.platformer-hud {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  padding: 8px 16px;
+  background: var(--color-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-soft);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.hud-collect {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  align-self: center;
+}
+
+.platformer-canvas {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-medium, 0 4px 20px rgba(0,0,0,0.12));
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*On-screen touch controls*/
+.platformer-touch-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 12px;
+  margin-top: 4px;
+}
+
+.touch-dpad {
+  display: flex;
+  gap: 10px;
+}
+
+.touch-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  background: var(--color-ocean);
+  color: white;
+  box-shadow: var(--shadow-medium, 0 4px 12px rgba(0,0,0,0.2));
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: transform 0.1s, background 0.1s;
+  line-height: 1;
+}
+
+.touch-btn:active {
+  transform: scale(0.9);
+  background: #1558A0;
+}
+
+.touch-jump {
+  background: #7EC8A0;
+}
+
+.touch-jump:active {
+  background: #4CAF50;
+}
+
+.platformer-hint {
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+  text-align: center;
+  margin: 0;
+}
+
+/*Educational message (between levels)*/
+.edu-message-card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 44px 40px;
+  box-shadow: var(--shadow-medium, 0 4px 20px rgba(0,0,0,0.1));
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.edu-top-emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.edu-level-complete {
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+}
+
+.edu-hearts-collected {
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  margin-bottom: 20px;
+}
+
+.edu-divider {
+  height: 2px;
+  background: var(--color-border, #eee);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+.edu-heading {
+  font-size: 1.35rem;
+  color: var(--color-ocean);
+  margin-bottom: 12px;
+}
+
+.edu-body {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  margin-bottom: 28px;
+}
+
+.edu-continue-btn {
+  font-size: 1rem;
+}
+
+/*Game over / finished screens*/
+.platformer-complete {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.complete-emoji {
+  font-size: 4.5rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.complete-score {
+  font-size: 1.2rem;
+  margin: 12px 0;
+}
+
+.complete-message {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 28px;
+}
+
+.complete-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/*Educational recap on finish screen*/
+.edu-recap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-bg-alt, #f8f9fa);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 20px 0 28px;
+  text-align: left;
+}
+
+.edu-recap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/*Responsive*/
+@media (max-width: 840px) {
+  .platformer-canvas {
+    width: 100%;
+  }
+
+  .platformer-hud {
+    max-width: 100%;
+  }
+
+  .edu-message-card {
+    padding: 28px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .platformer-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .touch-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.4rem;
+  }
+}

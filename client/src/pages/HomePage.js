@@ -58,6 +58,15 @@ function HomePage({ avatar, sessionId }) {
       slug: "sensory-sim",
     },
     {
+      title: "Help Sam's Journey",
+      description: "A platformer game where Sam navigates sensory and social challenges. Collect kindness hearts!",
+      emoji: "🎮",
+      color: "#A8D5E2",
+      textColor: "#2D3436",
+      link: "/platformer",
+      slug: "platformer",
+    },
+    {
       title: "Autism Ally Quiz",
       description: "Test what you have learned and earn your certificate!",
       emoji: "🏅",

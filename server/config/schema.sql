@@ -2,7 +2,9 @@
 -- MySQL 8.x
 -- Run: mysql -u root -p < schema.sql
 
-CREATE DATABASE IF NOT EXISTS understanding_autism;
+CREATE DATABASE IF NOT EXISTS understanding_autism
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 USE understanding_autism;
 
 -- EDUCATIONAL CONTENT
@@ -103,7 +105,7 @@ CREATE TABLE avatars (
   FOREIGN KEY (session_id) REFERENCES user_sessions(id) ON DELETE CASCADE
 );
 
--- APPLICATION USER (least-privilege — avoids running the app as root)
+-- APPLICATION USER (least-privilege, avoids running the app as root)
 CREATE USER IF NOT EXISTS 'autism_app'@'localhost' IDENTIFIED BY 'MMZeroDeparture';
 GRANT SELECT, INSERT, UPDATE ON understanding_autism.* TO 'autism_app'@'localhost';
 FLUSH PRIVILEGES;
@@ -111,8 +113,9 @@ FLUSH PRIVILEGES;
 --SEED DATA
 
 INSERT INTO modules (title, slug, description, icon, sort_order) VALUES
-  ('What is Autism?', 'what-is-autism', 'Learn the basics about autism in a friendly, simple way.', '📖', 1),
-  ('Walk in My Shoes', 'story',         'Interactive stories where your choices matter.',           '📚', 2),
-  ('Be a Good Friend', 'empathy-game',  'A drag-and-drop game about being kind and inclusive.',     '🤝', 3),
-  ('Sensory World',    'sensory-sim',   'Experience what sensory overload can feel like.',           '🌊', 4),
-  ('Autism Ally Quiz',  'quiz',         'Test what you have learned and earn your certificate!',     '🏅', 5);
+  ('What is Autism?',      'what-is-autism', 'Learn the basics about autism in a friendly, simple way.',              '📖', 1),
+  ('Walk in My Shoes',     'story',          'Interactive stories where your choices matter.',                        '📚', 2),
+  ('Be a Good Friend',     'empathy-game',   'A game about picking kind and helpful responses.',                      '🤝', 3),
+  ('Sensory World',        'sensory-sim',    'Experience what sensory overload can feel like.',                       '🌊', 4),
+  ('Autism Ally Quiz',     'quiz',           'Test what you have learned and earn your certificate!',                 '🏅', 5),
+  ('Help Sam''s Journey',  'platformer',     'A platformer game where Sam navigates sensory and social challenges.',  '🎮', 6);

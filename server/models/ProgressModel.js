@@ -15,6 +15,8 @@ const ProgressModel = {
   },
 
   // Update or create progress for a module
+  // upsert: inserts a new row the first time a module is attempted,
+  // or updates the existing row on subsequent completions (unique key is session_id + module_id)
   async upsert(sessionId, moduleId, status, score) {
     await pool.query(
       `INSERT INTO module_progress (session_id, module_id, status, score)

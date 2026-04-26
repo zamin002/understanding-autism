@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { DEFAULT_AVATAR } from "../data/avatarAssets";
 
 const AVATAR_KEY    = "autism_app_avatar";
+// separate key tracks whether the user has seen the avatar prompt at all
+// this lets us distinguish "skipped" (seen but dismissed) from "never asked" (fresh visit)
 const ONBOARDED_KEY = "autism_app_onboarded";
 
 function useAvatar() {

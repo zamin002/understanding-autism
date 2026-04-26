@@ -10,12 +10,14 @@ import EmpathyGamePage from "./pages/EmpathyGamePage";
 import SensorySim from "./pages/SensorySim";
 import QuizPage from "./pages/QuizPage";
 import CertificatePage from "./pages/CertificatePage";
+import PlatformerPage from "./pages/PlatformerPage";
 import AvatarOnboardingModal from "./components/avatar/AvatarOnboardingModal";
 import useAvatar from "./hooks/useAvatar";
 import useSession from "./hooks/useSession";
 
 function App() {
   const [calmMode, setCalmMode] = useState(false);
+  const [narrationEnabled, setNarrationEnabled] = useState(false);
   const [editingAvatar, setEditingAvatar] = useState(false);
   const { avatar, showOnboarding, saveAvatar, skipAvatar } = useAvatar();
   const { sessionId } = useSession();
@@ -34,6 +36,8 @@ function App() {
   }
 
   function handleClose() {
+    // if the user opened the editor manually from the navbar, just close it
+    // if it is the first-visit onboarding prompt, treat closing as skipping
     if (editingAvatar && !showOnboarding) {
       setEditingAvatar(false);
     } else {
@@ -55,6 +59,8 @@ function App() {
         <Navbar
           calmMode={calmMode}
           setCalmMode={setCalmMode}
+          narrationEnabled={narrationEnabled}
+          setNarrationEnabled={setNarrationEnabled}
           avatar={avatar}
           onEditAvatar={() => setEditingAvatar(true)}
         />
@@ -62,10 +68,11 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/learn" element={<LearnPage />} />
-            <Route path="/story" element={<StoryPage avatar={avatar} sessionId={sessionId} />} />
+            <Route path="/story" element={<StoryPage avatar={avatar} sessionId={sessionId} narrationEnabled={narrationEnabled} />} />
             <Route path="/empathy-game" element={<EmpathyGamePage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/sensory-sim" element={<SensorySim />} />
-            <Route path="/quiz" element={<QuizPage avatar={avatar} sessionId={sessionId} />} />
+            <Route path="/quiz" element={<QuizPage avatar={avatar} sessionId={sessionId} narrationEnabled={narrationEnabled} />} />
+            <Route path="/platformer" element={<PlatformerPage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/certificate" element={<CertificatePage avatar={avatar} />} />
           </Routes>
         </main>

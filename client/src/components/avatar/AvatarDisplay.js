@@ -156,6 +156,7 @@ function AvatarDisplay({ selections, size = 120 }) {
   return (
     <svg
       width={size}
+      // height is 1.25x width to match the 120x150 internal viewBox aspect ratio
       height={Math.round(size * 1.25)}
       viewBox="0 0 120 150"
       aria-label="Avatar"
