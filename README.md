@@ -160,7 +160,7 @@ CLIENT_URL=http://localhost:3000
 Create `client/.env` with the following contents:
 
 ```
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=http://localhost:5000/api
 ```
 
 > **Note:** Both `.env` files contain credentials and are excluded from version control via `.gitignore`. I would never commit them normally.
