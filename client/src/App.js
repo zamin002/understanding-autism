@@ -67,7 +67,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomePage avatar={avatar} sessionId={sessionId} />} />
-            <Route path="/learn" element={<LearnPage />} />
+            <Route path="/learn" element={<LearnPage sessionId={sessionId} />} />
             <Route path="/story" element={<StoryPage avatar={avatar} sessionId={sessionId} narrationEnabled={narrationEnabled} />} />
             <Route path="/empathy-game" element={<EmpathyGamePage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/sensory-sim" element={<SensorySim />} />

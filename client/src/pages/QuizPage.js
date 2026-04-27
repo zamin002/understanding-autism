@@ -88,7 +88,7 @@ function QuizPage({ avatar, sessionId, narrationEnabled }) {
             <p className="qc-message">
               {passed
                 ? "Congratulations! You really understand autism and how to be a great friend. You have earned your Autism Ally Certificate!"
-                : `You need at least ${passThreshold} correct answers to earn your certificate. Don't worry — you can try again after reviewing the learning sections!`}
+                : `You need at least ${passThreshold} correct answers to earn your certificate. Don't worry, you can try again after reviewing the learning sections!`}
             </p>
             <div className="qc-actions">
               {passed && (
