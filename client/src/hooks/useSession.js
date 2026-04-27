@@ -1,27 +1,38 @@
 import { useState, useEffect } from "react";
-import { createSession } from "../api";
+import { createSession, getSession } from "../api";
 
 const SESSION_KEY = "autism_app_session";
+
+function startNewSession(setSessionId) {
+  createSession()
+    .then((res) => {
+      const id = res.data.session?.id || res.data.id;
+      localStorage.setItem(SESSION_KEY, id);
+      setSessionId(id);
+    })
+    .catch(() => {
+      // backend unavailable — app still works without it
+    });
+}
 
 function useSession() {
   const [sessionId, setSessionId] = useState(null);
 
   useEffect(() => {
     const stored = localStorage.getItem(SESSION_KEY);
-    if (stored) {
-      setSessionId(stored);
+    if (!stored) {
+      startNewSession(setSessionId);
       return;
     }
-    // create a new anonymous session on first visit
-    createSession()
-      .then((res) => {
-        // handle both response shapes: {session: {id}} and {id} (defensive in case API shape changes)
-        const id = res.data.session?.id || res.data.id;
-        localStorage.setItem(SESSION_KEY, id);
-        setSessionId(id);
-      })
-      .catch(() => {
-        // backend unavailable — app still works without it
+    // verify the stored session still exists in the DB (e.g. after a DB reset)
+    getSession(stored)
+      .then(() => setSessionId(stored))
+      .catch((err) => {
+        if (err.response?.status === 404) {
+          localStorage.removeItem(SESSION_KEY);
+          startNewSession(setSessionId);
+        }
+        // any other error (network down etc.) — keep the stored id and retry later
       });
   }, []);
 

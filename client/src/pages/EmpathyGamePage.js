@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import empathyScenarios from "../data/empathyScenarios";
 import { MODULE_IDS } from "../data/moduleIds";
 import FeedbackBanner from "../components/FeedbackBanner";
 import ProgressBar from "../components/ProgressBar";
 import AvatarDisplay from "../components/avatar/AvatarDisplay";
-import { updateProgress } from "../api";
+import { fetchScenarios, updateProgress } from "../api";
 import { Link } from "react-router-dom";
 import "./EmpathyGamePage.css";
 
 function EmpathyGamePage({ avatar, sessionId }) {
+  const [scenarios, setScenarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedResponses, setSelectedResponses] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -16,8 +18,15 @@ function EmpathyGamePage({ avatar, sessionId }) {
   const [gameComplete, setGameComplete] = useState(false);
   const [lastCorrect, setLastCorrect] = useState(null);
 
-  const scenario = empathyScenarios[currentIndex];
-  const total = empathyScenarios.length;
+  useEffect(() => {
+    fetchScenarios(MODULE_IDS["empathy-game"])
+      .then((res) => setScenarios(res.data))
+      .catch(() => setError("Could not load scenarios. Please try again."))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const scenario = scenarios[currentIndex];
+  const total = scenarios.length;
 
   // Toggle a response selection
   const handleToggleResponse = (responseId) => {
@@ -35,7 +44,7 @@ function EmpathyGamePage({ avatar, sessionId }) {
 
     // a point is only awarded if the player selected exactly the right set
     // getting the count right but picking a wrong one, or missing a kind one, both count as incorrect
-    const kindIds = scenario.responses.filter((r) => r.isKind).map((r) => r.id);
+    const kindIds = scenario.choices.filter((r) => r.is_correct).map((r) => r.id);
     const allCorrect =
       selectedResponses.length == kindIds.length &&
       selectedResponses.every((id) => kindIds.includes(id));
@@ -78,6 +87,26 @@ function EmpathyGamePage({ avatar, sessionId }) {
     setScore(0);
     setGameComplete(false);
   };
+
+  if (loading) {
+    return (
+      <div className="empathy-page">
+        <div className="container">
+          <p style={{ textAlign: "center", padding: "2rem" }}>Loading scenarios…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="empathy-page">
+        <div className="container">
+          <p style={{ textAlign: "center", padding: "2rem", color: "var(--error)" }}>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   // Game complete
   if (gameComplete) {
@@ -131,7 +160,7 @@ function EmpathyGamePage({ avatar, sessionId }) {
           )}
           <div className="empathy-situation">
             <span className="situation-label">The Situation:</span>
-            <p className="situation-text">{scenario.situation}</p>
+            <p className="situation-text">{scenario.intro_text}</p>
           </div>
 
           <div className="empathy-responses">
@@ -139,13 +168,13 @@ function EmpathyGamePage({ avatar, sessionId }) {
               Tap the <strong>kind</strong> responses (there may be more than one):
             </p>
 
-            {scenario.responses.map((response) => {
+            {scenario.choices.map((response) => {
               const isSelected = selectedResponses.includes(response.id);
               let stateClass = "";
 
               if (showFeedback) {
-                if (response.isKind) stateClass = "correct";
-                else if (isSelected && !response.isKind) stateClass = "incorrect";
+                if (response.is_correct) stateClass = "correct";
+                else if (isSelected && !response.is_correct) stateClass = "incorrect";
                 else stateClass = "faded";
               }
 
@@ -159,14 +188,14 @@ function EmpathyGamePage({ avatar, sessionId }) {
                 >
                   <span className="response-indicator">
                     {showFeedback
-                      ? response.isKind
+                      ? response.is_correct
                         ? "✅"
                         : "❌"
                       : isSelected
                       ? "●"
                       : "○"}
                   </span>
-                  <span className="response-text">{response.text}</span>
+                  <span className="response-text">{response.choice_text}</span>
                 </button>
               );
             })}

@@ -233,7 +233,7 @@ To test the quiz certificate: answer at least 5 out of 7 questions correctly (70
 
 ## Known Limitations / What Is Not Yet Implemented
 
-- **Database-driven content**: Educational content (stories, quiz questions, education pages, empathy scenarios, platformer levels) is currently served from static JS data files in `client/src/data/`. The backend API and database schema are ready to serve this content once connected.
+- **Database-driven content**: Stories, quiz questions, education pages, and platformer levels are served from static JS data files in `client/src/data/`. The empathy game scenarios are fully database-driven, served via `/api/scenarios`.
 - **Audio narration browser support**: The Web Speech API is available in all modern browsers but voice quality and available voices vary by operating system. There is no fallback for browsers that do not support it.
 - **User testing with children**: Not conducted for ethical/safeguarding reasons at this stage.
 - **WCAG audit**: Basic accessibility features are implemented (keyboard navigation, ARIA labels, calm mode, alt text). A Lighthouse audit has been run and colour contrast issues have been resolved, but a full manual accessibility audit has not yet been conducted.

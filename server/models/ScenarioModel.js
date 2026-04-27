@@ -1,13 +1,39 @@
 const { pool } = require("../config/db");
 
 const ScenarioModel = {
-  // Get all scenarios for a module
+  // Get all scenarios for a module, with choices embedded
   async getByModule(moduleId) {
     const [rows] = await pool.query(
-      "SELECT id, title, intro_text, scenario_order FROM scenarios WHERE module_id = ? ORDER BY scenario_order",
+      `SELECT s.id AS scenario_id, s.intro_text, s.explanation, s.scenario_order,
+              sc.id AS choice_id, sc.choice_text, sc.is_correct, sc.choice_order
+       FROM scenarios s
+       LEFT JOIN scenario_choices sc ON sc.scenario_id = s.id
+       WHERE s.module_id = ?
+       ORDER BY s.scenario_order, sc.choice_order`,
       [moduleId]
     );
-    return rows;
+
+    const scenarioMap = new Map();
+    for (const row of rows) {
+      if (!scenarioMap.has(row.scenario_id)) {
+        scenarioMap.set(row.scenario_id, {
+          id: row.scenario_id,
+          intro_text: row.intro_text,
+          explanation: row.explanation,
+          scenario_order: row.scenario_order,
+          choices: [],
+        });
+      }
+      if (row.choice_id) {
+        scenarioMap.get(row.scenario_id).choices.push({
+          id: row.choice_id,
+          choice_text: row.choice_text,
+          is_correct: !!row.is_correct,
+          choice_order: row.choice_order,
+        });
+      }
+    }
+    return Array.from(scenarioMap.values());
   },
 
   // Get choices for a scenario

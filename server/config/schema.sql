@@ -2,7 +2,8 @@
 -- MySQL 8.x
 -- Run: mysql -u root -p < schema.sql
 
-CREATE DATABASE IF NOT EXISTS understanding_autism
+DROP DATABASE IF EXISTS understanding_autism;
+CREATE DATABASE understanding_autism
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 USE understanding_autism;
@@ -31,12 +32,13 @@ CREATE TABLE content_pages (
 );
 
 CREATE TABLE scenarios (
-  id          INT AUTO_INCREMENT PRIMARY KEY,
-  module_id   INT           NOT NULL,
-  title       VARCHAR(200)  NOT NULL,
-  intro_text  TEXT          NOT NULL,
-  scenario_order INT        DEFAULT 0,
-  created_at  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  module_id      INT           NOT NULL,
+  title          VARCHAR(200)  NOT NULL,
+  intro_text     TEXT          NOT NULL,
+  explanation    TEXT,
+  scenario_order INT           DEFAULT 0,
+  created_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (module_id) REFERENCES modules(id) ON DELETE CASCADE
 );
 
@@ -119,3 +121,50 @@ INSERT INTO modules (title, slug, description, icon, sort_order) VALUES
   ('Sensory World',        'sensory-sim',    'Experience what sensory overload can feel like.',                       '🌊', 4),
   ('Autism Ally Quiz',     'quiz',           'Test what you have learned and earn your certificate!',                 '🏅', 5),
   ('Help Sam''s Journey',  'platformer',     'A platformer game where Sam navigates sensory and social challenges.',  '🎮', 6);
+
+-- Empathy game scenarios (module_id = 3)
+INSERT INTO scenarios (module_id, title, intro_text, explanation, scenario_order) VALUES
+  (3, 'The Schedule Change',
+   'Your classmate is upset because the schedule changed suddenly.',
+   'Sudden changes can be really stressful for autistic people. Staying calm and explaining the new plan helps them feel safe.',
+   1),
+  (3, 'Playing Alone',
+   'A classmate is playing alone and doing the same thing over and over.',
+   'Repetitive activities can be calming and enjoyable for autistic people. Respecting this and gently offering to join is the kindest approach.',
+   2),
+  (3, 'PE Class Struggles',
+   'During PE, a classmate is struggling with the noise and bright lights in the sports hall.',
+   'Sports halls can be overwhelming with echoing sounds and bright lights. Helping them find a quieter space or telling a teacher shows real kindness.',
+   3),
+  (3, 'Same Lunch Every Day',
+   'A new student is autistic and eats the same lunch every single day.',
+   'Many autistic people prefer familiar foods because of taste or texture sensitivities. There is nothing wrong with eating the same thing, it is comforting!',
+   4);
+
+-- Choices for scenario 1 (The Schedule Change)
+INSERT INTO scenario_choices (scenario_id, choice_text, is_correct, choice_order) VALUES
+  (1, 'Say ''Just deal with it, things change!''', FALSE, 1),
+  (1, 'Tell them what the new plan is and stay calm', TRUE, 2),
+  (1, 'Laugh because it is not a big deal', FALSE, 3),
+  (1, 'Offer to help them understand what happens next', TRUE, 4);
+
+-- Choices for scenario 2 (Playing Alone)
+INSERT INTO scenario_choices (scenario_id, choice_text, is_correct, choice_order) VALUES
+  (2, 'Tell them they are being weird', FALSE, 1),
+  (2, 'Ask if you can join or sit nearby quietly', TRUE, 2),
+  (2, 'Take away what they are playing with', FALSE, 3),
+  (2, 'Respect that they might enjoy playing that way', TRUE, 4);
+
+-- Choices for scenario 3 (PE Class Struggles)
+INSERT INTO scenario_choices (scenario_id, choice_text, is_correct, choice_order) VALUES
+  (3, 'Tell the teacher so they can help', TRUE, 1),
+  (3, 'Yell at them to toughen up', FALSE, 2),
+  (3, 'Offer to walk with them to a quieter spot', TRUE, 3),
+  (3, 'Ignore them completely', FALSE, 4);
+
+-- Choices for scenario 4 (Same Lunch Every Day)
+INSERT INTO scenario_choices (scenario_id, choice_text, is_correct, choice_order) VALUES
+  (4, 'Make fun of their food choices', FALSE, 1),
+  (4, 'Accept it. Everyone has their own preferences', TRUE, 2),
+  (4, 'Force them to try something new', FALSE, 3),
+  (4, 'Sit with them and chat about something they enjoy', TRUE, 4);
