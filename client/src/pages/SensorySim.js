@@ -1,8 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { MODULE_IDS } from "../data/moduleIds";
+import { updateProgress } from "../api";
 import "./SensorySim.css";
 
-function SensorySim() {
+function SensorySim({ sessionId }) {
   const [intensity, setIntensity] = useState(0);
   const [started, setStarted] = useState(false);
   const [showReflection, setShowReflection] = useState(false);
@@ -172,7 +174,12 @@ function SensorySim() {
         </div>
 
         <div className="sensory-actions">
-          <button className="btn-primary" onClick={() => setShowReflection(true)}>
+          <button className="btn-primary" onClick={() => {
+            setShowReflection(true);
+            if (sessionId) {
+              updateProgress(sessionId, MODULE_IDS["sensory-sim"], "completed", intensity).catch(() => {});
+            }
+          }}>
             Stop &amp; Reflect
           </button>
           <button className="btn-reset" onClick={handleReset}>

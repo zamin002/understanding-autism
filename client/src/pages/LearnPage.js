@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import educationPages from "../data/educationPages";
+import { MODULE_IDS } from "../data/moduleIds";
 import ProgressBar from "../components/ProgressBar";
+import { updateProgress } from "../api";
 import { Link } from "react-router-dom";
 import "./LearnPage.css";
 
-function LearnPage() {
+function LearnPage({ sessionId }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [completed, setCompleted] = useState(false);
 
@@ -16,6 +18,9 @@ function LearnPage() {
       setCurrentPage(currentPage + 1);
     } else {
       setCompleted(true);
+      if (sessionId) {
+        updateProgress(sessionId, MODULE_IDS.learn, "completed", total).catch(() => {});
+      }
     }
   };
 

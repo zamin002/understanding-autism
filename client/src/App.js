@@ -70,7 +70,7 @@ function App() {
             <Route path="/learn" element={<LearnPage sessionId={sessionId} />} />
             <Route path="/story" element={<StoryPage avatar={avatar} sessionId={sessionId} narrationEnabled={narrationEnabled} />} />
             <Route path="/empathy-game" element={<EmpathyGamePage avatar={avatar} sessionId={sessionId} />} />
-            <Route path="/sensory-sim" element={<SensorySim />} />
+            <Route path="/sensory-sim" element={<SensorySim sessionId={sessionId} />} />
             <Route path="/quiz" element={<QuizPage avatar={avatar} sessionId={sessionId} narrationEnabled={narrationEnabled} />} />
             <Route path="/platformer" element={<PlatformerPage avatar={avatar} sessionId={sessionId} />} />
             <Route path="/certificate" element={<CertificatePage avatar={avatar} />} />
