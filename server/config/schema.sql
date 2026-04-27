@@ -110,7 +110,7 @@ CREATE USER IF NOT EXISTS 'autism_app'@'localhost' IDENTIFIED BY 'MMZeroDepartur
 GRANT SELECT, INSERT, UPDATE ON understanding_autism.* TO 'autism_app'@'localhost';
 FLUSH PRIVILEGES;
 
---SEED DATA
+-- SEED DATA
 
 INSERT INTO modules (title, slug, description, icon, sort_order) VALUES
   ('What is Autism?',      'what-is-autism', 'Learn the basics about autism in a friendly, simple way.',              '📖', 1),

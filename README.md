@@ -99,7 +99,6 @@ understanding-autism/
 │   │   ├── sessionRoutes.js
 │   │   ├── progressRoutes.js
 │   │   └── scenarioRoutes.js
-│   ├── .env.example            # Environment variable template
 │   ├── index.js                # Server entry point
 │   └── package.json
 ├── package.json                # Root package.json (concurrently dev script)
@@ -123,22 +122,30 @@ cd understanding-autism
 
 ### Step 2: Set Up the Database
 
-Open MySQL and run the schema file:
+Open a terminal in the project root and run the schema file.
 
+**macOS / Linux / Git Bash:**
 ```bash
 mysql -u root -p < server/config/schema.sql
 ```
 
-This creates the `understanding_autism` database (with `utf8mb4` charset for emoji support) with all tables and seeds all six modules.
+**Windows PowerShell:**
+```powershell
+Get-Content server/config/schema.sql | mysql -u root -p
+```
+
+**Windows Command Prompt:**
+```cmd
+mysql -u root -p < server\config\schema.sql
+```
+
+> **Windows users:** If `mysql` is not recognised as a command, add MySQL to your PATH or use the full executable path, e.g. `"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p < server\config\schema.sql`
+
+This creates the `understanding_autism` database (with `utf8mb4` charset for emoji support), all tables, the `autism_app` database user, and seeds all six modules.
 
 ### Step 3: Configure Environment Variables
 
-```bash
-cd server
-cp .env.example .env
-```
-
-The following environment variables are required in `server/.env`:
+Create `server/.env` with the following contents:
 
 ```
 PORT=5000
@@ -150,36 +157,33 @@ DB_PORT=3306
 CLIENT_URL=http://localhost:3000
 ```
 
-> **Note:** `server/.env` contains sensitive credentials and should not be committed to version control. In a production deployment this file would be excluded via `.gitignore`.
-
-Also create `client/.env` for the frontend API URL:
+Create `client/.env` with the following contents:
 
 ```
 REACT_APP_API_URL=http://localhost:5000
 ```
 
+> **Note:** Both `.env` files contain credentials and are excluded from version control via `.gitignore`. I would never commit them normally.
+
 ### Step 4: Install Dependencies
 
-From the project root:
+From the project root, run these commands in order:
 
+**macOS / Linux / Git Bash:**
 ```bash
-# Install root dependencies
 npm install
-
-# Install server dependencies
 cd server && npm install
-
-# Install client dependencies
-cd ../client && npm install
-
-# Go back to root
-cd ..
+cd ../client && npm install && cd ..
 ```
 
-Or use the shortcut:
-
-```bash
-npm run install-all
+**Windows PowerShell or Command Prompt:**
+```powershell
+npm install
+cd server
+npm install
+cd ..\client
+npm install
+cd ..
 ```
 
 ### Step 5: Run the Application
